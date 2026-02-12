@@ -1,0 +1,75 @@
+<Window x:Class="RtspPlayer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vlc="clr-namespace:LibVLCSharp.WPF;assembly=LibVLCSharp.WPF"
+        mc:Ignorable="d"
+        Title="RTSP Player" Height="600" Width="900"
+        Closing="Window_Closing">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Input Section -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBlock Text="RTSP URL / קובץ:" VerticalAlignment="Center" Margin="0,0,10,0" Width="100"/>
+            <ComboBox x:Name="RtspUrlComboBox" 
+                     Width="500" 
+                     Height="30"
+                     VerticalContentAlignment="Center"
+                     Padding="5"
+                     IsEditable="True"
+                     ToolTip="הזן כתובת RTSP או לחץ 'עיון...' לבחירת קובץ וידאו מקומי">
+                <ComboBoxItem Content="(בחר קובץ וידאו מקומי - מומלץ לבדיקה)"/>
+                <ComboBoxItem Content="rtsp://demo:demo@ipvmdemo.dyndns.org:5541/onvif-media/media.amp?profile=profile_1_h264&amp;&amp;sessiontimeout=60&amp;&amp;streamtype=unicast"/>
+                <ComboBoxItem Content="rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov"/>
+                <ComboBoxItem Content="rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4"/>
+                <ComboBoxItem Content="rtsp://127.0.0.1:8554/test"/>
+            </ComboBox>
+            <Button x:Name="BrowseButton" 
+                    Content="עיון..." 
+                    Width="80" 
+                    Height="30" 
+                    Margin="10,0,0,0"
+                    Click="BrowseButton_Click"/>
+            <Button x:Name="PlayButton" 
+                    Content="Play" 
+                    Width="80" 
+                    Height="30" 
+                    Margin="10,0,0,0"
+                    Click="PlayButton_Click"/>
+            <Button x:Name="StopButton" 
+                    Content="Stop" 
+                    Width="80" 
+                    Height="30" 
+                    Margin="10,0,0,0"
+                    Click="StopButton_Click"
+                    IsEnabled="False"/>
+        </StackPanel>
+
+        <!-- Status Bar -->
+        <Border Grid.Row="1" 
+                Background="#F0F0F0" 
+                BorderBrush="#CCCCCC" 
+                BorderThickness="1" 
+                Padding="5" 
+                Margin="0,0,0,10">
+            <TextBlock x:Name="StatusTextBlock" 
+                       Text="מוכן" 
+                       FontSize="12"/>
+        </Border>
+
+        <!-- Video Display Area -->
+        <Border Grid.Row="2" 
+                BorderBrush="#CCCCCC" 
+                BorderThickness="1" 
+                Background="Black">
+            <vlc:VideoView x:Name="VideoView"/>
+        </Border>
+    </Grid>
+</Window>
